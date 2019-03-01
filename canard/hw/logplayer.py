@@ -11,6 +11,9 @@ class LogPlayer:
         self.start_timestamp = time.time()
         self.running = True
 
+    def stop(self):
+        self.running = False
+
     def recv(self):
         assert self.running, 'not running'
         last_timestamp = 0
