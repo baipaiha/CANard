@@ -31,7 +31,8 @@ class LogPlayer:
         fields = line.split(' ')
 
         id = int(fields[1], 0)
-        frame = can.Frame(id)
+        ext_id = id > 0x7FF and id <= 0x1FFFFFFF
+        frame = can.Frame(id, is_extended_id=ext_id)
 
         frame.timestamp = float(fields[0])
 
