@@ -42,7 +42,12 @@ class CantactDev:
         # receive characters until a newline (\r) is hit
         rx_str = ""
         while rx_str == "" or rx_str[-1] != '\r':
-            rx_str = rx_str + self.ser.read().decode('ascii')
+            rx =  self.ser.read().decode('ascii')
+            if rx == "":
+                # Read timeout from pySerial
+                return None
+            else:
+                rx_str = rx_str + rx
 
         # check frame type
         if rx_str[0] == 'T':
