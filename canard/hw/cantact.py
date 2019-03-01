@@ -1,4 +1,5 @@
 import serial
+import time
 
 from .. import can
 
@@ -12,6 +13,7 @@ class CantactDev:
 
     def start(self):
         self._dev_write('O\r')
+        self.start_time = time.time()
 
     def stop(self):
         self._dev_write('C\r')
@@ -84,6 +86,7 @@ class CantactDev:
             data.append(int(rx_str[data_offset+i*2:(data_offset+2)+i*2], 16))
             frame.data = data
 
+        frame.timestamp = time.time() - self.start_time
         return frame
 
     def send(self, frame):
