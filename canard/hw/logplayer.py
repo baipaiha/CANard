@@ -4,14 +4,18 @@ from .. import can
 class LogPlayer:
     running = False
     def __init__(self, log_filename):
-        self.logfile = open(log_filename, 'r')
+        self.log_filename = log_filename
+        self.logfile = None
 
     def start(self):
         assert not self.running, 'cannot start, already running'
+        self.logfile = open(self.log_filename, 'r')
         self.start_timestamp = time.time()
         self.running = True
 
     def stop(self):
+        if self.logfile:
+            self.logfile.close()
         self.running = False
 
     def recv(self):
